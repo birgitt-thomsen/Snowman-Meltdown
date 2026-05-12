@@ -25,50 +25,59 @@ def display_game_state(mistakes, secret_word, guessed_letters):
 
 
 def play_game():
-    secret_word = get_random_word()
-    guessed_letters = []
-    mistakes = 0
-    max_mistakes = 3
+    while True:
 
-    print("Welcome to Snowman Meltdown!")
+        secret_word = get_random_word()
+        guessed_letters = []
+        mistakes = 0
+        max_mistakes = 3
 
-    # for testing only, later remove this line
-    print("Secret word selected: " + secret_word)
+        print("Welcome to Snowman Meltdown!")
 
-    # game loop
-    while mistakes < max_mistakes:
+        # for testing only, later remove this line
+        print("Secret word selected: " + secret_word)
 
-        # show current game state
-        display_game_state(mistakes, secret_word, guessed_letters)
+        # game loop
+        while mistakes < max_mistakes:
 
-        # check if player already guessed the word
-        word_guessed = True
+            # show current game state
+            display_game_state(mistakes, secret_word, guessed_letters)
 
-        for letter in secret_word:
-            if letter not in guessed_letters:
-                word_guessed = False
+            # check if player already guessed the word
+            word_guessed = True
+
+            for letter in secret_word:
+                if letter not in guessed_letters:
+                    word_guessed = False
+                    break
+
+            if word_guessed:
+                print("Congratulations, you saved the snowman!")
                 break
 
-        if word_guessed:
-            print("Congratulations, you saved the snowman!")
+            # get player input
+            guess = input("Guess a letter: ").lower()
+            print("You guessed:", guess)
+
+            # validate input
+            if not guess.isalpha() or len(guess) != 1:
+                print("Please enter a single letter.")
+                continue
+
+            guessed_letters.append(guess)
+
+            # wrong guess
+            if guess not in secret_word:
+                mistakes += 1
+
+        # player lost messaging
+        if mistakes == max_mistakes:
+            display_game_state(mistakes, secret_word, guessed_letters)
+            print("Game Over! The word was:", secret_word)
+
+        # ask to play again
+        play_again = input("Would you like to play again? (y/n): ").lower()
+
+        if play_again != "y":
+            print("Thanks for playing!")
             break
-
-        # get player input
-        guess = input("Guess a letter: ").lower()
-        print("You guessed:", guess)
-
-        # validate input
-        if not guess.isalpha() or len(guess) != 1:
-            print("Please enter a single letter.")
-            continue
-
-        guessed_letters.append(guess)
-
-        # wrong guess
-        if guess not in secret_word:
-            mistakes += 1
-
-    # player lost messaging
-    if mistakes == max_mistakes:
-        display_game_state(mistakes, secret_word, guessed_letters)
-        print("Game Over! The word was:", secret_word)
