@@ -67,3 +67,8 @@ def play_game():
         # wrong guess
         if guess not in secret_word:
             mistakes += 1
+
+    # player lost messaging
+    if mistakes == max_mistakes:
+        display_game_state(mistakes, secret_word, guessed_letters)
+        print("Game Over! The word was:", secret_word)
