@@ -57,6 +57,11 @@ def play_game():
         guess = input("Guess a letter: ").lower()
         print("You guessed:", guess)
 
+        # validate input
+        if not guess.isalpha() or len(guess) != 1:
+            print("Please enter a single letter.")
+            continue
+
         guessed_letters.append(guess)
 
         # wrong guess
