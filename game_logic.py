@@ -1,5 +1,9 @@
-from ascii_art import STAGES
+"""
+Handles all elements for the game play such as secret words, random word
+selection, game status display and the actual game loop.
+"""
 import random
+from ascii_art import STAGES
 
 # List of secret words
 WORDS = ["python", "git", "github", "snowman", "meltdown"]
@@ -11,7 +15,10 @@ def get_random_word():
 
 
 def display_game_state(mistakes, secret_word, guessed_letters):
-    # Display the snowman stage for the current number of mistakes.
+    """
+    Displays snowman stage for the current number of mistakes and builds
+    display version of the secret word.
+    """
     print(STAGES[mistakes])
     # Build a display version of the secret word.
     display_word = ""
@@ -21,10 +28,11 @@ def display_game_state(mistakes, secret_word, guessed_letters):
         else:
             display_word += "_ "
     print("Word: ", display_word)
-    print("\n")
+    #print("\n")
 
 
 def play_game():
+    """Contains game play loops incl. messaging and replay option."""
     while True:
 
         secret_word = get_random_word()
@@ -32,12 +40,9 @@ def play_game():
         mistakes = 0
         max_mistakes = 5
 
-        print("Welcome to Snowman Meltdown!")
+        print("\n******* Welcome to Snowman Meltdown! *******")
 
-        # for testing only, later remove this line
-        print("Secret word selected: " + secret_word)
-
-        # game loop
+        # main game loop
         while mistakes < max_mistakes:
 
             # show current game state
@@ -57,7 +62,6 @@ def play_game():
 
             # get player input
             guess = input("Guess a letter: ").lower()
-            print("You guessed:", guess)
 
             # validate input
             if not guess.isalpha() or len(guess) != 1:
@@ -73,10 +77,11 @@ def play_game():
         # player lost messaging
         if mistakes == max_mistakes:
             display_game_state(mistakes, secret_word, guessed_letters)
-            print("Game Over! The word was:", secret_word)
+            print("Oh no, the snowman melted!")
+            print("The word was:", secret_word)
 
         # ask to play again
-        play_again = input("Would you like to play again? (y/n): ").lower()
+        play_again = input("\nWould you like to play again? (y/n): ").lower()
 
         if play_again != "y":
             print("Thanks for playing!")

@@ -1,4 +1,4 @@
-"""Contains the snowman ASCII art stages."""
+"""Contains the snowman ASCII art meltdown stages."""
 
 STAGES = [
      # Stage 0: Full snowman
